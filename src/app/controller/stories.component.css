@@ -1,0 +1,92 @@
+.page {
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+.header {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+.controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.search {
+  width: 320px;
+  max-width: 50vw;
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+.page-size select {
+  margin-left: 6px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+.status {
+  padding: 12px;
+  color: #555;
+}
+.status.error {
+  color: #b00020;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.table th,
+.table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid #f0f0f0;
+  text-align: left;
+  vertical-align: top;
+}
+.table thead th {
+  font-weight: 600;
+  background: #fafafa;
+}
+.title-cell a {
+  text-decoration: none;
+  color: #0b57d0;
+}
+.title-cell a:hover {
+  text-decoration: underline;
+}
+
+.pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+}
+.pager .buttons button {
+  margin-left: 6px;
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fafafa;
+  cursor: pointer;
+}
+.pager .buttons button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

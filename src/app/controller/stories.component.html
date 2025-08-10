@@ -1,0 +1,92 @@
+<div class="page">
+  <header class="header">
+    <h1 class="title">Hacker News — Newest</h1>
+
+    <div class="controls">
+      <input
+        class="search"
+        [formControl]="searchCtrl"
+        type="text"
+        placeholder="Search by title..."
+        aria-label="Search by title"
+      />
+
+      <label class="page-size">
+        Page size
+        <select
+          [value]="pageSize()"
+          (change)="onChangePageSize($any($event.target).value)"
+        >
+          <option>10</option>
+          <option>20</option>
+          <option>50</option>
+          <option>100</option>
+        </select>
+      </label>
+    </div>
+  </header>
+
+  <section class="card">
+    <div class="status" *ngIf="loading()">Loading…</div>
+    <div class="status error" *ngIf="!loading() && error()">{{ error() }}</div>
+    <div class="status" *ngIf="!loading() && !error() && items().length === 0">
+      No results.
+    </div>
+
+    <table class="table" *ngIf="!loading() && !error() && items().length">
+      <thead>
+        <tr>
+          <!-- <th style="width: 64px">ID</th> -->
+          <th>Title</th>
+          <th style="width: 220px">By</th>
+          <th style="width: 120px">Score</th>
+          <th style="width: 220px">Time</th>
+          <!-- <th style="width: 100px">Link</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of items(); trackBy: trackId">
+          <!-- <td>{{ s.id }}</td> -->
+          <td class="title-cell">
+            <a
+              *ngIf="s.url; else noUrl"
+              [href]="s.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              >{{ s.title }}</a
+            >
+            <ng-template #noUrl>{{ s.title }}</ng-template>
+          </td>
+          <td>{{ s.by }}</td>
+          <td>{{ s.score }}</td>
+          <td>{{ unixToLocalString(s.time) }}</td>
+          <!-- <td>
+            <a
+              *ngIf="s.url"
+              [href]="s.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Open</a
+            >
+          </td> -->
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pager" *ngIf="!loading() && total() > 0">
+      <div class="count">
+        Page {{ page() }} / {{ totalPages() }} • Total {{ total() | number }}
+      </div>
+      <div class="buttons">
+        <button (click)="goFirst()" [disabled]="page() === 1">« First</button>
+        <button (click)="goPrev()" [disabled]="page() === 1">‹ Prev</button>
+        <button (click)="goNext()" [disabled]="page() >= totalPages()">
+          Next ›
+        </button>
+        <button (click)="goLast()" [disabled]="page() >= totalPages()">
+          Last »
+        </button>
+      </div>
+    </div>
+  </section>
+</div>
