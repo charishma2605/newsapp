@@ -38,37 +38,23 @@
         <tr>
           <!-- <th style="width: 64px">ID</th> -->
           <th>Title</th>
-          <th style="width: 220px">By</th>
-          <th style="width: 120px">Score</th>
-          <th style="width: 220px">Time</th>
-          <!-- <th style="width: 100px">Link</th> -->
+          <th style="width: 100px">Link</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let s of items(); trackBy: trackId">
           <!-- <td>{{ s.id }}</td> -->
           <td class="title-cell">
-            <a
-              *ngIf="s.url; else noUrl"
-              [href]="s.url"
-              target="_blank"
-              rel="noopener noreferrer"
-              >{{ s.title }}</a
-            >
-            <ng-template #noUrl>{{ s.title }}</ng-template>
+            <span>{{ s.title }}</span>
           </td>
-          <td>{{ s.by }}</td>
-          <td>{{ s.score }}</td>
-          <td>{{ unixToLocalString(s.time) }}</td>
-          <!-- <td>
-            <a
-              *ngIf="s.url"
-              [href]="s.url"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Open</a
-            >
-          </td> -->
+
+          <td>
+            <div *ngIf="s.url">
+              <a [href]="s.url" target="_blank" rel="noopener noreferrer"
+                >open</a
+              >
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>
