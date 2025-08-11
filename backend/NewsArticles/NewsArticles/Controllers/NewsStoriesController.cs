@@ -22,7 +22,15 @@ namespace NewsArticles.Controllers
         public async Task<IActionResult> GetNewest([FromBody] PagedSearchRequestDto requestDto, CancellationToken ct = default)
         {
             var (items, total) = await _service.GetNewestAsync(requestDto, ct);
-            return Ok(new {  total, items });
+            NewestStoriesResponseDto newestStories = new NewestStoriesResponseDto()
+            {
+                Total = total,
+                Items=items,
+                Page=requestDto.PageNumber,
+                PageSize=requestDto.PageSize
+            };
+
+            return Ok(newestStories);
         }
 
         [HttpGet("{id:int}")]
