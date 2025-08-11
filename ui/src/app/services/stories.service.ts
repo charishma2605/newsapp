@@ -3,7 +3,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { StoriesResponse } from '../models/story';
 
-const API_BASE = 'https://localhost:7250';
+const API_BASE =
+  'https://newsappbackend-hnc2ehchh0gdggaz.centralus-01.azurewebsites.net';
 
 @Injectable({ providedIn: 'root' })
 export class StoriesService {
