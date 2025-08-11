@@ -20,7 +20,7 @@ builder.Services.AddMemoryCache();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(CorsPolicy, policy =>
-        policy.WithOrigins("http://localhost:4200", "https://localhost:4200")
+        policy.WithOrigins("http://localhost:4200", "https://localhost:4200", "https://polite-forest-0a8180a10.2.azurestaticapps.net")
               .AllowAnyHeader()
               .AllowAnyMethod());
 });
