@@ -4,8 +4,8 @@
 name: Build and deploy ASP.Net Core app to Azure Web App - newsappbackend
 
 env:
-  PROJECT_FILE: backend/NewsArticles/NewsArticles/NewsArticles.csproj
-  PUBLISH_DIR:  ${{ github.workspace }}/publish
+  PROJECT_FILE: ./backend/NewsArticles/NewsArticles/NewsArticles.csproj
+  PUBLISH_DIR:  ./publish
   
 on:
   push:
@@ -68,5 +68,6 @@ jobs:
           package: .
 
           
+
 
 
