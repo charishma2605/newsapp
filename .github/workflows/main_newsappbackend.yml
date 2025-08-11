@@ -5,7 +5,7 @@ name: Build and deploy ASP.Net Core app to Azure Web App - newsappbackend
 
 env:
   PROJECT_FILE: backend/NewsArticles/NewsArticles/NewsArticles.csproj
-  PUBLISH_DIR:  backend/NewsArticles/NewsArticles/NewsArticles.csproj/bin/Release/net8.0
+  PUBLISH_DIR:  ${{ github.workspace }}/publish
   
 on:
   push:
@@ -36,7 +36,7 @@ jobs:
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
-          name: .net-app
+          name: backend-publish
           path: ${{ env.PUBLISH_DIR }}
 
   deploy:
@@ -68,4 +68,5 @@ jobs:
           package: .
 
           
+
 
