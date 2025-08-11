@@ -28,7 +28,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddHttpClient<INewsStoriesClientService, NewsStoriesClientService>(client =>
 {
     client.BaseAddress = new Uri(builder.Configuration["NewsStoriesCacheOptions:BaseUrl"]!);
-    client.Timeout = TimeSpan.FromSeconds(10);
+    client.Timeout = TimeSpan.FromSeconds(30);
 })
 .AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(3, retry => TimeSpan.FromMilliseconds(200 * (retry + 1))));
 
