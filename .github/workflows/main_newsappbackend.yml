@@ -5,13 +5,13 @@ on:
     branches: [ main ]
     paths:
       - 'backend/**'
-      - '.github/workflows/backend-appservice.yml'
+      - '.github/workflows/main_newsappbackend.yml'
   workflow_dispatch:
 
 env:
   DOTNET_VERSION: '8.0.x'
-  PROJECT_FILE: backend/NewsArticles/NewsArticles/NewsArticles.csproj
-  PUBLISH_DIR:  ${{ github.workspace }}/publish
+  PROJECT_FILE: ./backend/NewsArticles/NewsArticles/NewsArticles.csproj
+  PUBLISH_DIR:  ./publish
   WEBAPP_NAME:  newsappbackend
 
 jobs:
@@ -71,3 +71,4 @@ jobs:
           app-name:  ${{ env.WEBAPP_NAME }}
           slot-name: Production
           package:   ./artifact
+
