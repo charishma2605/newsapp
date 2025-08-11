@@ -3,6 +3,10 @@
 
 name: Build and deploy ASP.Net Core app to Azure Web App - newsappbackend
 
+env:
+  PROJECT_FILE: backend/NewsArticles/NewsArticles/NewsArticles.csproj
+  PUBLISH_DIR:  backend/NewsArticles/NewsArticles/NewsArticles.csproj/bin/Release/net8.0
+  
 on:
   push:
     branches:
@@ -27,13 +31,13 @@ jobs:
         run: dotnet build --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o "./backend/NewsArticles"
+        run: dotnet publish ${{ env.PROJECT_FILE }} -c Release -o "${{ env.PUBLISH_DIR }}"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
-          path: ./backend/NewsArticles
+          path: ${{ env.PUBLISH_DIR }}
 
   deploy:
     runs-on: windows-latest
@@ -64,3 +68,4 @@ jobs:
           package: .
 
           
+
