@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { StoriesResponse } from '../models/story';
 
-const API_BASE = 'https://localhost:7043';
+const API_BASE = 'https://localhost:7250';
 
 @Injectable({ providedIn: 'root' })
 export class StoriesService {
@@ -14,16 +14,15 @@ export class StoriesService {
     pageSize: number;
     search?: string;
   }): Observable<StoriesResponse> {
-    let httpParams = new HttpParams()
-      .set('page', params.page)
-      .set('pageSize', params.pageSize);
+    let data = {
+      page: params.page,
+      pageSize: params.pageSize,
+      search: params.search ? params.search.trim() : null,
+    };
 
-    if (params.search?.trim()) {
-      httpParams = httpParams.set('search', params.search.trim());
-    }
-
-    return this.http.get<StoriesResponse>(`${API_BASE}/api/Stories/newest`, {
-      params: httpParams,
-    });
+    return this.http.post<StoriesResponse>(
+      `${API_BASE}/api/NewsStories/newest`,
+      data
+    );
   }
 }
