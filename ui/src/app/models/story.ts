@@ -7,6 +7,7 @@ export interface Story {
   score: number | null;
 }
 
+// backend response
 export interface StoriesResponse {
   page: number;
   pageSize: number;

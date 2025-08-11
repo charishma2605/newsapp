@@ -18,7 +18,6 @@ export class StoriesComponent {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
-  // State
   page = signal(1);
   pageSize = signal(20);
   total = signal(0);
@@ -55,16 +54,9 @@ export class StoriesComponent {
 
     // Initial fetch
     this.fetch();
-
-    // Keep URL synced on page/pageSize manual changes
-    effect(() => {
-      // Trigger when page or pageSize changes via UI
-      this.page();
-      this.pageSize();
-      // Don’t refetch here (buttons call fetch), just keep URL consistent
-    });
   }
 
+  // Core fetch
   fetch(): void {
     console.log('Page ' + this.page());
     console.log('Page Size' + this.pageSize());
@@ -89,7 +81,6 @@ export class StoriesComponent {
       });
   }
 
-  // Pager controls (server-side)
   goFirst() {
     if (this.page() !== 1) {
       this.page.set(1);
@@ -123,11 +114,5 @@ export class StoriesComponent {
       this.page.set(1);
       this.fetch();
     }
-  }
-
-  // Utilities
-  unixToLocalString(seconds?: number | null): string {
-    if (!seconds && seconds !== 0) return '';
-    return new Date(seconds * 1000).toLocaleString();
   }
 }
