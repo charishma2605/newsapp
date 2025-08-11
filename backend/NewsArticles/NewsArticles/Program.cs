@@ -1,10 +1,14 @@
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using NewsArticles.Models.Configurations;
 using NewsArticles.Services.Implementations;
 using NewsArticles.Services.Interfaces;
+using Polly;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+const string CorsPolicy = "AllowAngular4200";
 
 builder.Services.AddControllers();
 
@@ -13,9 +17,23 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddMemoryCache();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(CorsPolicy, policy =>
+        policy.WithOrigins("http://localhost:4200", "https://localhost:4200")
+              .AllowAnyHeader()
+              .AllowAnyMethod());
+});
+
+builder.Services.AddHttpClient<INewsStoriesClientService, NewsStoriesClientService>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["NewsStoriesCacheOptions:BaseUrl"]!);
+    client.Timeout = TimeSpan.FromSeconds(10);
+})
+.AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(3, retry => TimeSpan.FromMilliseconds(200 * (retry + 1))));
+
 builder.Services.Configure<NewsStoriesCacheOptions>(builder.Configuration.GetSection("NewsStoriesCacheOptions"));
 
-builder.Services.AddScoped<INewsStoriesClientService,NewsStoriesClientService>();
 builder.Services.AddScoped<INewsStoriesService, NewsStoriesService>();
 
 var app = builder.Build();
@@ -30,7 +48,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
+app.UseCors(CorsPolicy);
 app.MapControllers();
 
 app.Run();

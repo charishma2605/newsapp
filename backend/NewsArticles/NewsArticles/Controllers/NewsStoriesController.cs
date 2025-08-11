@@ -18,7 +18,7 @@ namespace NewsArticles.Controllers
         /// <summary>
         /// Get newest News stories with paging and optional title search.
         /// </summary>
-        [HttpGet("newest")]
+        [HttpPost("newest")]
         public async Task<IActionResult> GetNewest([FromBody] PagedSearchRequestDto requestDto, CancellationToken ct = default)
         {
             var (items, total) = await _service.GetNewestAsync(requestDto, ct);
