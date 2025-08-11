@@ -15,7 +15,6 @@ import { StoriesResponse, Story } from '../models/story';
 })
 export class StoriesComponent {
   private svc = inject(StoriesService);
-  private route = inject(ActivatedRoute);
   private router = inject(Router);
 
   page = signal(1);
@@ -117,6 +116,8 @@ export class StoriesComponent {
   }
 
   reload() {
-    window.location.reload();
+    this.pageSize.set(20);
+    this.page.set(1);
+    this.fetch();
   }
 }
