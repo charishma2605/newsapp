@@ -3,27 +3,27 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { StoriesResponse } from '../models/story';
 
-const API_BASE = 'https://localhost:7250';
-//'https://newsappbackend-hnc2ehchh0gdggaz.centralus-01.azurewebsites.net';
+const API_BASE = 
+  'https://newsappbackend-hnc2ehchh0gdggaz.centralus-01.azurewebsites.net';
 
-@Injectable({ providedIn: 'root' })
-export class StoriesService {
-  private http = inject(HttpClient);
+  @Injectable({ providedIn: 'root' })
+  export (class StoriesService {
+    private http = inject(HttpClient);
 
-  getNewest(params: {
-    page: number;
-    pageSize: number;
-    search?: string;
-  }): Observable<StoriesResponse> {
-    let data = {
-      pageNumber: params.page,
-      pageSize: params.pageSize,
-      search: params.search ? params.search.trim() : null,
-    };
+    getNewest(params: {
+      page: number;
+      pageSize: number;
+      search?: string;
+    }): Observable<StoriesResponse> {
+      let data = {
+        pageNumber: params.page,
+        pageSize: params.pageSize,
+        search: params.search ? params.search.trim() : null,
+      };
 
-    return this.http.post<StoriesResponse>(
-      `${API_BASE}/api/NewsStories/newest`,
-      data
-    );
-  }
-}
+      return this.http.post<StoriesResponse>(
+        `${API_BASE}/api/NewsStories/newest`,
+        data
+      );
+    }
+  });
