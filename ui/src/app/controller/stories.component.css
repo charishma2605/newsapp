@@ -14,6 +14,7 @@
   margin: 0;
   font-size: 20px;
   font-weight: 700;
+  cursor: pointer;
 }
 .controls {
   display: flex;

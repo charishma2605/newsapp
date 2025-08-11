@@ -115,4 +115,8 @@ export class StoriesComponent {
       this.fetch();
     }
   }
+
+  reload() {
+    window.location.reload();
+  }
 }
