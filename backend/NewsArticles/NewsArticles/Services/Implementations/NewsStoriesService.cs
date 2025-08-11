@@ -80,7 +80,7 @@ namespace NewsArticles.Services.Implementations
             var items = (await Task.WhenAll(pageIds.Select(x => GetStoryCached(x, ct))))
                 .Where(s => s is not null)!.Cast<NewsStoryDto>().ToList();
 
-            return (items, ids.Count);
+            return (items, total);
         }
     }
 }
