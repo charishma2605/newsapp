@@ -19,22 +19,45 @@ jobs:
     permissions:
       contents: read #This is required for actions/checkout
 
-    steps:
-      - uses: actions/checkout@v4
+    # steps:
+    #   - uses: actions/checkout@v4
 
-      - name: Set up .NET Core
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.x'
+    #   - name: Set up .NET Core
+    #     uses: actions/setup-dotnet@v4
+    #     with:
+    #       dotnet-version: '8.x'
 
       
-      - name: Build with dotnet
-        run: dotnet build ${{ env.PROJECT_FILE }} --configuration Release --no-restore
+    #   - name: Build with dotnet
+    #     run: dotnet build ${{ env.PROJECT_FILE }} --configuration Release --no-restore
 
-      - name: dotnet publish
-        run: dotnet publish ${{ env.PROJECT_FILE }} -c Release -o "${{ env.PUBLISH_DIR }}"
+    #   - name: dotnet publish
+    #     run: dotnet publish ${{ env.PROJECT_FILE }} -c Release -o "${{ env.PUBLISH_DIR }}"
 
-      - name: Upload artifact for deployment job
+    #   - name: Upload artifact for deployment job
+    #     uses: actions/upload-artifact@v4
+    #     with:
+    #       name: backend-publish
+    #       path: ${{ env.PUBLISH_DIR }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore
+        run: dotnet restore "${{ env.PROJECT_FILE }}"
+
+      - name: Build
+        run: dotnet build "${{ env.PROJECT_FILE }}" --configuration Release --no-restore
+
+      - name: Publish
+        run: dotnet publish "${{ env.PROJECT_FILE }}" -c Release -o "${{ env.PUBLISH_DIR }}"
+
+      - name: Upload artifact for deployment
         uses: actions/upload-artifact@v4
         with:
           name: backend-publish
@@ -69,6 +92,7 @@ jobs:
           package: .
 
           
+
 
 
 
