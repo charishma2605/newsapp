@@ -71,27 +71,29 @@ jobs:
       contents: read #This is required for actions/checkout
 
     steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v4
-        with:
-          name: .net-app
+     - name: Download artifact
+       uses: actions/download-artifact@v4
+       with:
+          name: backend-publish
+          path: ./artifact
       
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
+     - name: Login to Azure
+       uses: azure/login@v2
+       with:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_6EDC9825C8634E0EB8CB447D7CA98B63 }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_7D5DF72C816F4EDBB7636160A44E6CBA }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_D529BE6FC5B5449B912484099D8B5471 }}
 
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v3
-        with:
+     - name: Deploy to Azure Web App
+       id: deploy-to-webapp
+       uses: azure/webapps-deploy@v3
+       with:
           app-name: 'newsappbackend'
           slot-name: 'Production'
           package: .
 
           
+
 
 
 
