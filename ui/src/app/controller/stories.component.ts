@@ -37,11 +37,10 @@ export class StoriesComponent {
 
   constructor() {
     // Initialize from URL
-    const qp = this.route.snapshot.queryParamMap;
-    this.page.set(Number(qp.get('page')) || 1);
-    this.pageSize.set(Number(qp.get('pageSize')) || 20);
+    this.page.set(Number(1));
+    this.pageSize.set(Number(20));
 
-    const searchFromUrl = qp.get('search') || '';
+    const searchFromUrl = '';
     this.search.set(searchFromUrl);
     this.searchCtrl.setValue(searchFromUrl);
 
@@ -51,7 +50,6 @@ export class StoriesComponent {
       .subscribe((val) => {
         this.search.set(val || '');
         this.page.set(1); // reset to first page on new search
-        this.syncUrl();
         this.fetch();
       });
 
@@ -64,7 +62,6 @@ export class StoriesComponent {
       this.page();
       this.pageSize();
       // Don’t refetch here (buttons call fetch), just keep URL consistent
-      this.syncUrl(false);
     });
   }
 
@@ -96,21 +93,18 @@ export class StoriesComponent {
   goFirst() {
     if (this.page() !== 1) {
       this.page.set(1);
-      this.syncUrl();
       this.fetch();
     }
   }
   goPrev() {
     if (this.page() > 1) {
       this.page.set(this.page() - 1);
-      this.syncUrl();
       this.fetch();
     }
   }
   goNext() {
     if (this.page() < this.totalPages()) {
       this.page.set(this.page() + 1);
-      this.syncUrl();
       this.fetch();
     }
   }
@@ -118,7 +112,6 @@ export class StoriesComponent {
     const last = this.totalPages();
     if (this.page() !== last) {
       this.page.set(last);
-      this.syncUrl();
       this.fetch();
     }
   }
@@ -128,7 +121,6 @@ export class StoriesComponent {
     if (ps !== this.pageSize()) {
       this.pageSize.set(ps);
       this.page.set(1);
-      this.syncUrl();
       this.fetch();
     }
   }
@@ -137,19 +129,5 @@ export class StoriesComponent {
   unixToLocalString(seconds?: number | null): string {
     if (!seconds && seconds !== 0) return '';
     return new Date(seconds * 1000).toLocaleString();
-  }
-
-  private syncUrl(refetch = false) {
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: {
-        page: this.page(),
-        pageSize: this.pageSize(),
-        ...(this.search().trim() ? { search: this.search().trim() } : {}),
-      },
-      queryParamsHandling: '',
-      replaceUrl: true,
-    });
-    if (refetch) this.fetch();
   }
 }

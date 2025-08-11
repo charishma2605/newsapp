@@ -3,8 +3,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { StoriesResponse } from '../models/story';
 
-const API_BASE =
-  'https://newsappbackend-hnc2ehchh0gdggaz.centralus-01.azurewebsites.net';
+const API_BASE = 'https://localhost:7250';
+//'https://newsappbackend-hnc2ehchh0gdggaz.centralus-01.azurewebsites.net';
 
 @Injectable({ providedIn: 'root' })
 export class StoriesService {
@@ -16,7 +16,7 @@ export class StoriesService {
     search?: string;
   }): Observable<StoriesResponse> {
     let data = {
-      page: params.page,
+      pageNumber: params.page,
       pageSize: params.pageSize,
       search: params.search ? params.search.trim() : null,
     };
