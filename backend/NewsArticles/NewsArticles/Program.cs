@@ -13,9 +13,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddMemoryCache();
 
-builder.Services.Configure<NewsStoriesCacheOptions>(builder.Configuration.GetSection("HackerNews"));
+builder.Services.Configure<NewsStoriesCacheOptions>(builder.Configuration.GetSection("NewsStoriesCacheOptions"));
 
 builder.Services.AddScoped<INewsStoriesClientService,NewsStoriesClientService>();
+builder.Services.AddScoped<INewsStoriesService, NewsStoriesService>();
 
 var app = builder.Build();
 
